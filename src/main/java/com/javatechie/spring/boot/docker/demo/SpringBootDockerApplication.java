@@ -29,7 +29,7 @@ public class SpringBootDockerApplication {
                 "        }\n" +
                 "        header {\n" +
                 "            background-color: gray;\n" +
-                "            color: white;\n" +
+                "            color: green;\n" +
                 "            padding: 10px;\n" +
                 "            text-align: left;\n" +
                 "            width: 100%;\n" +
@@ -63,9 +63,9 @@ public class SpringBootDockerApplication {
                 "</div>\n" +
                 "<div class=\"content\">\n" +
                 "    <h1>Hello Team, Welcome to Fluence Project</h1>\n" +
-                "    <p><b>This is a Version 01</b></p>\n" +
+                "    <p><b>This is a Version 02</b></p>\n" +
                 "    <div class=\"box\">\n" +
-                "        <h2>End to End CI/CD setup using CircleCI, JFrog, ArgoCD, and EKS</h2>\n" +
+                "        <h2>End to End CI/CD setup using CircleCI, JFrog, ArgoCD and EKS</h2>\n" +
                 "    </div>\n" +
                 "</div>\n" +
                 "</body>\n" +
