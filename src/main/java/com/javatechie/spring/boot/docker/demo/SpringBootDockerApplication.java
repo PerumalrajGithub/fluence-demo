@@ -63,7 +63,7 @@ public class SpringBootDockerApplication {
                 "</div>\n" +
                 "<div class=\"content\">\n" +
                 "    <h1>Hello Team, Welcome to Fluence Project</h1>\n" +
-                "    <p>This is a DEMO 2 Application</p>\n" +
+                "    <p><b>This is a Version 01</b></p>\n" +
                 "    <div class=\"box\">\n" +
                 "        <h2>End to End CI/CD setup using CircleCI, JFrog, ArgoCD, and EKS</h2>\n" +
                 "    </div>\n" +
