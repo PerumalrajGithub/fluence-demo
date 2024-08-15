@@ -1,4 +1,5 @@
 version: 2.1
+
 orbs:
   slack: circleci/slack@4.9.3
 
@@ -8,31 +9,15 @@ jobs:
       - image: maven:3.8.1-jdk-11
       - image: cimg/base:2022.09
         auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
+          username: 1201abhi
+          password: dockerhub1201
     working_directory: ~/project
     steps:
       - checkout
       - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
-      - run:
-          name: Set up JDK 11
-          command: |
-            echo 'export JAVA_HOME="/usr/local/openjdk-11"' >> $BASH_ENV
-            echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> $BASH_ENV
-            source $BASH_ENV
       - run:
           name: Build and test Maven project
           command: mvn clean install
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
       - run:
           name: Build Docker image
           command: |
@@ -49,17 +34,8 @@ jobs:
           name: Tag and Push Docker image to Docker Hub
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            docker tag $DOCKER_IMAGE $DOCKERHUB_USERNAME/$DOCKER_IMAGE:$TAG
-            docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE:$TAG
-      - run:
-          name: Login to JFrog Artifactory
-          command: |
-            echo $JFROG_PASSWORD | docker login -u $JFROG_USERNAME --password-stdin fluencedevops.jfrog.io
-      - run:
-          name: Tag and Push Docker image to JFrog Artifactory
-          command: |
-            docker tag $DOCKER_IMAGE fluencedevops.jfrog.io/fluence-repo/$DOCKER_IMAGE:0.1.$CIRCLE_BUILD_NUM
-            docker push fluencedevops.jfrog.io/fluence-repo/$DOCKER_IMAGE:0.1.$CIRCLE_BUILD_NUM
+            docker tag $DOCKER_IMAGE 1201abhi/$DOCKER_IMAGE:$TAG
+            docker push 1201abhi/$DOCKER_IMAGE:$TAG
 
   notify_slack:
     docker:
