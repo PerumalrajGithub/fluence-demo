@@ -37,17 +37,22 @@ jobs:
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker tag $DOCKER_IMAGE $DOCKERHUB_USERNAME/$DOCKER_IMAGE:$TAG
             docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE:$TAG
+      - run:
+          name: Update Kubernetes Deployment with New Image
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            sed -i "s|fluencedevops.jfrog.io/fluence-repo/appcicd:.*|fluencedevops.jfrog.io/fluence-repo/appcicd:$TAG|g" k8s/deployment.yaml
+            cat k8s/deployment.yaml
+      - run:
+          name: Apply Kubernetes Manifests
+          command: |
+            kubectl apply -f k8s/deployment.yaml
+            kubectl apply -f k8s/service.yaml
+      - run:
+          name: Trigger ArgoCD Sync
+          command: |
+            argocd app sync fluence-deployment --auth-token $ARGOCD_AUTH_TOKEN
 
-  notify_slack:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
 
 workflows:
   version: 2
